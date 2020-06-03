@@ -1,6 +1,6 @@
 # GuildSite-backend
 
-#Technologies
+# Technologies
 NodeJS
 TypeScript
 ExpressJS

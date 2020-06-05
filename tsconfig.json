@@ -15,7 +15,8 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "allowUnreachableCode": false,
-    "allowUnusedLabels": false
+    "allowUnusedLabels": false,
+    "allowSyntheticDefaultImports": true
   },
   "lib": ["ES2019"],
   "exclude": ["dist"]

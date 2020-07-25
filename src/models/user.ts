@@ -89,6 +89,18 @@ export const findUserByUsername = async (username: string) => {
   }
 };
 
+export const findUserByEmail = async (email: string) => {
+  try {
+    return await User.findAll({
+      where: {
+        eMail: email,
+      },
+    });
+  } catch (error) {
+    return error;
+  }
+};
+
 export const checkDB = async () => {
   try {
     await sequelize.authenticate();

@@ -18,19 +18,18 @@ export const createNewUser = (
           password: hash,
           eMail: req.body.email,
         });
-        res
-          .status(201)
-          .send({
-            message: "Account has been created!",
-            status: 203,
-            redirect: true,
-          });
+        res.status(201).send({
+          message: "Account has been created!",
+          status: 203,
+          redirect: true,
+        });
         next();
       } else {
         return;
       }
     });
   } else {
-    res.status(403).send({ error: errors, status: 403 });
+    const errorsMessages = errors.array().map((error) => error.msg);
+    res.status(403).send({ errors: errorsMessages });
   }
 };

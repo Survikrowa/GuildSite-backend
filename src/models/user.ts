@@ -79,7 +79,7 @@ export const createUser = async ({
 
 export const findUserByUsername = async (username: string) => {
   try {
-    return await User.findAll({
+    return await User.findOne({
       where: {
         username: username,
       },
@@ -91,7 +91,7 @@ export const findUserByUsername = async (username: string) => {
 
 export const findUserByEmail = async (email: string) => {
   try {
-    return await User.findAll({
+    return await User.findOne({
       where: {
         eMail: email,
       },

@@ -13,6 +13,8 @@ class User extends Model {
   public userAvatar!: string;
   public createdAt!: Date;
   public updatedAt!: Date;
+  public authenticated!: boolean;
+  public authCodeId!: number;
 }
 
 User.init(
@@ -54,6 +56,13 @@ User.init(
       allowNull: false,
       defaultValue: NOW,
     },
+    authenticated: {
+      type: DataTypes.BOOLEAN,
+    },
+    authCodeId: {
+      type: DataTypes.NUMBER,
+      allowNull: false,
+    },
   },
   {
     tableName: "mzg_backend",
@@ -61,16 +70,16 @@ User.init(
   }
 );
 
-export const createUser = async ({
-  username,
-  password,
-  eMail,
-}: Partial<User>) => {
+export const createUser = async (
+  { username, password, eMail }: Partial<User>,
+  authCodeId: number
+) => {
   try {
     await User.create({
       username: username,
       password: password,
       eMail: eMail,
+      authCodeId: authCodeId,
     });
   } catch (error) {
     console.error(error);

@@ -76,10 +76,10 @@ export const createUser = async (
 ) => {
   try {
     await User.create({
-      username: username,
-      password: password,
-      email: email,
-      authCodeId: authCodeId,
+      username,
+      password,
+      email,
+      authCodeId,
     });
   } catch (error) {
     console.error(error);
@@ -90,7 +90,7 @@ export const findUserByUsername = async (username: string) => {
   try {
     return await User.findOne({
       where: {
-        username: username,
+        username,
       },
     });
   } catch (error) {
@@ -102,7 +102,7 @@ export const findUserByEmail = async (email: string) => {
   try {
     return await User.findOne({
       where: {
-        eMail: email,
+        email,
       },
     });
   } catch (error) {

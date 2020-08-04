@@ -20,7 +20,7 @@ export const sendConfirmationMail = async (
 ) => {
   return transporter.sendMail({
     from: "muzykancizgruzji@gmail.com",
-    to: to,
+    to,
     subject: MAIL_SUBJECT,
     html: prepareTextForMail(activationCode),
   });

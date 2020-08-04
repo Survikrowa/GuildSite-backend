@@ -1,0 +1,9 @@
+{
+  "dev": {
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
+    "dialect": ""
+  }
+}

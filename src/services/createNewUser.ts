@@ -9,7 +9,7 @@ export const createNewUser = async (req: Request, authCodeId: number) => {
     {
       username: req.body.username,
       password: hashedPassword,
-      eMail: req.body.email,
+      email: req.body.email,
     },
     authCodeId
   );

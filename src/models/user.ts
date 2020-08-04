@@ -8,7 +8,7 @@ class User extends Model {
   public id!: number;
   public username!: string;
   public password!: string;
-  public eMail!: string;
+  public email!: string;
   public userRank!: string;
   public userAvatar!: string;
   public createdAt!: Date;
@@ -32,7 +32,7 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    eMail: {
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -71,14 +71,14 @@ User.init(
 );
 
 export const createUser = async (
-  { username, password, eMail }: Partial<User>,
+  { username, password, email }: Partial<User>,
   authCodeId: number
 ) => {
   try {
     await User.create({
       username: username,
       password: password,
-      eMail: eMail,
+      email: email,
       authCodeId: authCodeId,
     });
   } catch (error) {

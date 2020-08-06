@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "activationCodes",
-          key: "authCodeId",
+          key: "id",
         },
       },
       createdAt: {

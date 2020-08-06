@@ -9,10 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.myAssociation = this.belongsTo(models.User);
     }
   }
   activationCodes.init(
     {
+      authCodeId: DataTypes.NUMBER,
       activationCode: DataTypes.STRING,
     },
     {

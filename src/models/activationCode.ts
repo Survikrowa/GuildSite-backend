@@ -42,7 +42,19 @@ activationCodes.init(
 export const insertActivationCode = async (activationCode: string) => {
   try {
     return activationCodes.create({
-      activationCode: activationCode,
+      activationCode,
+    });
+  } catch (error) {
+    return error;
+  }
+};
+
+export const findCodeInDb = async (activationCode: string) => {
+  try {
+    return activationCodes.findOne({
+      where: {
+        activationCode,
+      },
     });
   } catch (error) {
     return error;

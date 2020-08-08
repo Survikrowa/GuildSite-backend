@@ -1,4 +1,4 @@
-import { Sequelize, Model, DataTypes, NOW } from "sequelize";
+import { Sequelize, Model, DataTypes, NOW, Op } from "sequelize";
 
 const sequelize = new Sequelize(
   `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_IP}/${process.env.DB_NAME}`
@@ -58,6 +58,7 @@ User.init(
     },
     authenticated: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
     authCodeId: {
       type: DataTypes.NUMBER,
@@ -100,11 +101,31 @@ export const findUserByUsername = async (username: string) => {
 
 export const findUserByEmail = async (email: string) => {
   try {
-    return await User.findOne({
+    return User.findOne({
       where: {
         email,
       },
     });
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateUserAuthStatus = async (authCodeId: string) => {
+  try {
+    return User.update(
+      {
+        authenticated: true,
+      },
+      {
+        where: {
+          authCodeId,
+          [Op.and]: {
+            authenticated: false,
+          },
+        },
+      }
+    );
   } catch (error) {
     return error;
   }

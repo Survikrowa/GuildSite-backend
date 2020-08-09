@@ -4,12 +4,13 @@ import { createUser } from "../models/user";
 const SALT_ROUNDS = 10;
 
 export const createNewUser = async (req: Request, authCodeId: number) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, SALT_ROUNDS);
+  const { username, email, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
   await createUser(
     {
-      username: req.body.username,
+      username,
       password: hashedPassword,
-      email: req.body.email,
+      email,
     },
     authCodeId
   );

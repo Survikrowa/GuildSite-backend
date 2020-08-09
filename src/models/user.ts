@@ -89,7 +89,7 @@ export const createUser = async (
 
 export const findUserByUsername = async (username: string) => {
   try {
-    return await User.findOne({
+    return User.findOne({
       where: {
         username,
       },

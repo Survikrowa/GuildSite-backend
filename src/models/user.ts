@@ -4,7 +4,7 @@ const sequelize = new Sequelize(
   `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_IP}/${process.env.DB_NAME}`
 );
 
-class User extends Model {
+export class User extends Model {
   public id!: number;
   public username!: string;
   public password!: string;

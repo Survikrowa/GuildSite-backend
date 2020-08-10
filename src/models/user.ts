@@ -44,7 +44,8 @@ User.init(
     userAvatar: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "Link później",
+      defaultValue:
+        "https://res.cloudinary.com/survikrowa/image/upload/v1597051975/sq6iqojgm6qlm5lqcifv.jpg",
     },
     createdAt: {
       type: DataTypes.DATE,

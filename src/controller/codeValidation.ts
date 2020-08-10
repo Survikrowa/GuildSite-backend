@@ -8,18 +8,17 @@ export const codeValidationController: RequestHandler = async (
   next
 ) => {
   const { activationCode } = req.params;
-  const authCodeSelectResponse = await findCodeInDb(activationCode);
-  if (authCodeSelectResponse) {
-    const authCodeId = authCodeSelectResponse.get("authCodeId");
+  const foundCode = await findCodeInDb(activationCode);
+  if (foundCode) {
+    const authCodeId = foundCode.get("authCodeId");
     const userUpdateStatus = await updateUserAuthStatus(authCodeId);
     if (userUpdateStatus[0]) {
       res.status(200).json({ message: "User authenticated successfully" });
     } else {
       res.status(409).json({ message: "User is actually authenticated" });
     }
-    next();
   } else {
     res.status(400).json({ message: "Provided auth code is wrong" });
-    next();
   }
+  next();
 };

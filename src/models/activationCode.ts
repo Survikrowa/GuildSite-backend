@@ -4,14 +4,14 @@ const sequelize = new Sequelize(
   `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_IP}/${process.env.DB_NAME}`
 );
 
-class activationCodes extends Model {
+class ActivationCodes extends Model {
   public authCodeId!: number;
   public activationCode!: string;
   public createdAt!: Date;
   public updatedAt!: Date;
 }
 
-activationCodes.init(
+ActivationCodes.init(
   {
     authCodeId: {
       type: DataTypes.INTEGER,
@@ -41,7 +41,7 @@ activationCodes.init(
 
 export const insertActivationCode = async (activationCode: string) => {
   try {
-    return activationCodes.create({
+    return ActivationCodes.create({
       activationCode,
     });
   } catch (error) {
@@ -51,7 +51,7 @@ export const insertActivationCode = async (activationCode: string) => {
 
 export const findCodeInDb = async (activationCode: string) => {
   try {
-    return activationCodes.findOne({
+    return ActivationCodes.findOne({
       where: {
         activationCode,
       },

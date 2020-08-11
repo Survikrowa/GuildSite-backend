@@ -19,7 +19,7 @@ app.use(
   Session({
     secret: <string>process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
 app.use(CookieParser(process.env.SESSION_SECRET));

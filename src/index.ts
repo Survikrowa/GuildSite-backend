@@ -9,7 +9,7 @@ import { strategy } from "./services/passportLocalStrategy";
 import { User } from "./models/user";
 
 const app = express();
-const port = 3000;
+const port = process.env.APP_PORT;
 
 passport.use(strategy);
 

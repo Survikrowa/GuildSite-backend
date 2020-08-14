@@ -1,8 +1,5 @@
-import { Sequelize, Model, DataTypes, NOW } from "sequelize";
-
-const sequelize = new Sequelize(
-  `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_IP}/${process.env.DB_NAME}`
-);
+import { Model, DataTypes, NOW } from "sequelize";
+import { sequelize } from "./sequelizeInstance";
 
 class ActivationCodes extends Model {
   public authCodeId!: number;

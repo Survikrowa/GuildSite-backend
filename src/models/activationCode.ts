@@ -1,5 +1,6 @@
 import { Model, DataTypes, NOW } from "sequelize";
 import { sequelize } from "./sequelizeInstance";
+import { logger } from "../services/errorLogger";
 
 class ActivationCodes extends Model {
   public authCodeId!: number;
@@ -42,7 +43,8 @@ export const insertActivationCode = async (activationCode: string) => {
       activationCode,
     });
   } catch (error) {
-    return error;
+    logger.log({ level: "error", message: error });
+    return;
   }
 };
 
@@ -54,6 +56,7 @@ export const findCodeInDb = async (activationCode: string) => {
       },
     });
   } catch (error) {
-    return error;
+    logger.log({ level: "error", message: error });
+    return;
   }
 };

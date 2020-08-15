@@ -11,10 +11,12 @@ export const userController: RequestHandler = async (req, res, _next) => {
   if (!validatedSchema[0]) {
     const authCode = await generateAuthCode();
     const instanceOfInsert = await insertActivationCode(authCode);
-    const authCodeId = instanceOfInsert.get("authCodeId");
-    const userAccountCreateMessage = await createNewUser(req, authCodeId);
-    await sendConfirmationMail(req.body.email, authCode);
-    res.status(201).send({ message: userAccountCreateMessage });
+    if (instanceOfInsert) {
+      const authCodeId = instanceOfInsert.get("authCodeId");
+      const userAccountCreateMessage = await createNewUser(req, authCodeId);
+      await sendConfirmationMail(req.body.email, authCode);
+      res.status(201).send({ message: userAccountCreateMessage });
+    }
   } else {
     const errors = validatedSchema.map((error: ZodError) => error.message);
     res.status(403).send({ errors });

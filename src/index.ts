@@ -7,6 +7,16 @@ import { checkDB, findUserByUsername } from "./models/user";
 import passport from "passport";
 import { strategy } from "./services/passportLocalStrategy";
 import { User } from "./models/user";
+import { logger } from "./services/errorLogger";
+import { transports, format } from "winston";
+
+if (process.env.NODE_ENV !== "production") {
+  logger.add(
+    new transports.Console({
+      format: format.simple(),
+    })
+  );
+}
 
 const app = express();
 const port = process.env.APP_PORT;
@@ -30,7 +40,7 @@ passport.serializeUser<User, string>((user, done) => {
   done(null, user.username);
 });
 
-passport.deserializeUser<string, string>(async (username, done) => {
+passport.deserializeUser<User, string>(async (username, done) => {
   try {
     const user = await findUserByUsername(username);
     if (!user) {

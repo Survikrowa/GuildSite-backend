@@ -1,5 +1,6 @@
 import { Model, DataTypes, NOW, Op } from "sequelize";
 import { sequelize } from "./sequelizeInstance";
+import { logger } from "../services/errorLogger";
 
 export class User extends Model {
   public id!: number;
@@ -81,7 +82,8 @@ export const createUser = async (
       authCodeId,
     });
   } catch (error) {
-    console.error(error);
+    logger.log({ level: "error", message: error });
+    return;
   }
 };
 
@@ -93,7 +95,8 @@ export const findUserByUsername = async (username: string) => {
       },
     });
   } catch (error) {
-    return error;
+    logger.log({ level: "error", message: error });
+    return;
   }
 };
 
@@ -105,11 +108,12 @@ export const findUserByEmail = async (email: string) => {
       },
     });
   } catch (error) {
-    return error;
+    logger.log({ level: "error", message: error });
+    return;
   }
 };
 
-export const updateUserAuthStatus = async (authCodeId: string) => {
+export const updateUserAuthStatus = async (authCodeId: number) => {
   try {
     return User.update(
       {
@@ -125,7 +129,8 @@ export const updateUserAuthStatus = async (authCodeId: string) => {
       }
     );
   } catch (error) {
-    return error;
+    logger.log({ level: "error", message: error });
+    return;
   }
 };
 
@@ -134,6 +139,7 @@ export const checkDB = async () => {
     await sequelize.authenticate();
     console.log("Success db connection");
   } catch (error) {
-    console.error(error);
+    logger.log({ level: "error", message: error });
+    return;
   }
 };

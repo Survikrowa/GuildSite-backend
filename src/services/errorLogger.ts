@@ -1,15 +1,8 @@
-import { createLogger, format, transports } from "winston";
-import path from "path";
+import log4js from "log4js";
 
-export const logger = createLogger({
-  level: "info",
-  format: format.json(),
-  defaultMeta: { service: "user-service" },
-  transports: [
-    new transports.File({
-      filename: path.join(__dirname, "/error.log"),
-      level: "error",
-    }),
-    new transports.File({ filename: path.join(__dirname, "combined.log") }),
-  ],
+log4js.configure({
+  appenders: { cheese: { type: "file", filename: "error.log" } },
+  categories: { default: { appenders: ["cheese"], level: "error" } },
 });
+
+export const logger = log4js.getLogger("cheese");

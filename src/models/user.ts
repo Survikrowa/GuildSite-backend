@@ -82,7 +82,7 @@ export const createUser = async (
       authCodeId,
     });
   } catch (error) {
-    logger.log({ level: "error", message: error });
+    logger.error(error);
     return;
   }
 };
@@ -95,7 +95,7 @@ export const findUserByUsername = async (username: string) => {
       },
     });
   } catch (error) {
-    logger.log({ level: "error", message: error });
+    logger.error(error);
     return;
   }
 };
@@ -108,7 +108,7 @@ export const findUserByEmail = async (email: string) => {
       },
     });
   } catch (error) {
-    logger.log({ level: "error", message: error });
+    logger.error(error);
     return;
   }
 };
@@ -129,7 +129,7 @@ export const updateUserAuthStatus = async (authCodeId: number) => {
       }
     );
   } catch (error) {
-    logger.log({ level: "error", message: error });
+    logger.error(error);
     return;
   }
 };
@@ -139,7 +139,7 @@ export const checkDB = async () => {
     await sequelize.authenticate();
     console.log("Success db connection");
   } catch (error) {
-    logger.log({ level: "error", message: error });
+    logger.error(error);
     return;
   }
 };

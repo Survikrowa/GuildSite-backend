@@ -5,20 +5,20 @@ import CookieParser from "cookie-parser";
 import { router } from "./router/router";
 import { checkDB, findUserByUsername } from "./models/user";
 import passport from "passport";
-import { strategy } from "./services/passportLocalStrategy";
+import { strategy as LocalStrategy } from "./services/passportLocalStrategy";
 import { User } from "./models/user";
 
 const app = express();
 const port = process.env.APP_PORT;
 
-passport.use(strategy);
+passport.use(LocalStrategy);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   Session({
     secret: <string>process.env.SESSION_SECRET,
-    resave: true,
+    resave: false,
     saveUninitialized: false,
   })
 );

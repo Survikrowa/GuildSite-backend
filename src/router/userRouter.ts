@@ -7,4 +7,4 @@ export const userRouter = Router();
 
 userRouter.post("/", userController);
 userRouter.post("/login", authPassportController);
-userRouter.get("/logout", logoutUser);
+userRouter.post("/logout", logoutUser);

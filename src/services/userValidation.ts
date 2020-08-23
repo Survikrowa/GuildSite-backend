@@ -1,4 +1,4 @@
-import { findUserByEmail, findUserByUsername } from "../models/user";
+import { findUserBy } from "../models/user";
 
 import * as zod from "zod";
 
@@ -28,8 +28,8 @@ export const validateRegister = async ({
 }: registerData) => {
   try {
     registerSchema.parse({ username, password, email });
-    const usernameFound = await findUserByUsername(username);
-    const emailFound = await findUserByEmail(email);
+    const usernameFound = await findUserBy({ username });
+    const emailFound = await findUserBy({ email });
     if (usernameFound || emailFound) {
       throw [{ message: "Username or email already taken" }];
     }

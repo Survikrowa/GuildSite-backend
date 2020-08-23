@@ -72,10 +72,10 @@ User.init(
 
 export const createUser = async (
   { username, password, email }: Partial<User>,
-  authCodeId: number
+  authCodeId?: number
 ) => {
   try {
-    await User.create({
+    return await User.create({
       username,
       password,
       email,
@@ -87,25 +87,10 @@ export const createUser = async (
   }
 };
 
-export const findUserByUsername = async (username: string) => {
+export const findUserBy = async (conditions: Record<string, string>) => {
   try {
     return User.findOne({
-      where: {
-        username,
-      },
-    });
-  } catch (error) {
-    logger.error(error);
-    return;
-  }
-};
-
-export const findUserByEmail = async (email: string) => {
-  try {
-    return User.findOne({
-      where: {
-        email,
-      },
+      where: conditions,
     });
   } catch (error) {
     logger.error(error);

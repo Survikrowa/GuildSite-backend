@@ -1,5 +1,4 @@
 import * as zod from "zod";
-import { findUserBy } from "./databaseServices/findUserBy";
 
 const registerSchema = zod.object({
   username: zod
@@ -20,19 +19,13 @@ const loginSchema = zod.object({
     .min(8, { message: "Password must be at least 8 chars long" }),
 });
 
-export const validateRegister = async ({
+export const parseUserRegisterCredentials = async ({
   username,
   password,
   email,
 }: registerData) => {
   try {
-    registerSchema.parse({ username, password, email });
-    const usernameFound = await findUserBy({ username });
-    const emailFound = await findUserBy({ email });
-    if (usernameFound || emailFound) {
-      throw [{ message: "Username or email already taken" }];
-    }
-    return true;
+    return registerSchema.parse({ username, password, email });
   } catch (e) {
     if (e instanceof zod.ZodError) {
       return e.errors;
@@ -42,10 +35,12 @@ export const validateRegister = async ({
   }
 };
 
-export const validateLoginData = ({ username, password }: loginData) => {
+export const parseUserLoginCredentials = async ({
+  username,
+  password,
+}: loginData) => {
   try {
-    loginSchema.parse({ username, password });
-    return true;
+    return loginSchema.parse({ username, password });
   } catch (e) {
     return e.errors;
   }

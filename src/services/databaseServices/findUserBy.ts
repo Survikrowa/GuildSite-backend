@@ -1,7 +1,10 @@
 import { User } from "../../models/user";
+import { Op } from "sequelize";
 
-export const findUserBy = async (conditions: Record<string, string>) => {
+export const findUserBy = (conditions: Record<string, string>) => {
   return User.findOne({
-    where: conditions,
+    where: {
+      [Op.or]: [conditions],
+    },
   });
 };

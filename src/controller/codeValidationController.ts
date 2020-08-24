@@ -14,8 +14,8 @@ export const codeValidationController: RequestHandler = async (
   } else {
     const authCodeId = foundCode.get("authCodeId");
     if (authCodeId) {
-      const userUpdateStatus = await updateUserAuthStatus(authCodeId);
-      if (userUpdateStatus) {
+      const isUserAuthenticated = await updateUserAuthStatus(authCodeId);
+      if (isUserAuthenticated) {
         res.status(200).json({ message: "User authenticated successfully" });
       } else {
         res.status(409).json({ message: "User is actually authenticated" });

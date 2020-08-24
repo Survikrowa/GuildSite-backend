@@ -1,7 +1,7 @@
 import { logger } from "../errorLogger";
 import { ActivationCodes } from "../../models/activationCode";
 
-export const findCodeInDb = async (activationCode: string) => {
+export const findCodeInDb = (activationCode: string) => {
   try {
     return ActivationCodes.findOne({
       where: {

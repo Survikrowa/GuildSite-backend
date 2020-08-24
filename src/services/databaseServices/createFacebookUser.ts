@@ -1,19 +1,17 @@
 import { User } from "../../models/user";
-import { logger } from "../errorLogger";
 
-export const createFacebookUser = async ({
+export const createFacebookUser = ({
   username,
   password,
   email,
 }: Partial<User>) => {
   try {
-    return await User.create({
+    return User.create({
       username,
       password,
       email,
     });
   } catch (error) {
-    logger.error(error);
-    return;
+    throw new Error(error);
   }
 };

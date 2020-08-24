@@ -1,7 +1,7 @@
 import { logger } from "../errorLogger";
 import { ActivationCodes } from "../../models/activationCode";
 
-export const insertActivationCode = async (activationCode: string) => {
+export const insertActivationCode = (activationCode: string) => {
   try {
     return ActivationCodes.create({
       activationCode,

@@ -19,21 +19,25 @@ const verifyCallback: VerifyFunction = async (
   profile,
   done
 ) => {
-  if (profile?.emails) {
-    const username = profile.displayName;
-    const email = profile?.emails[0].value;
-    const user = await findUserBy({ email });
-    if (user) return done(null, user);
-    const crypto = await generateCrypto();
-    const password = await bcrypt.hash(crypto, SALT_ROUNDS);
-    const createdUser = await createFacebookUser({
-      username,
-      password,
-      email,
-    });
-    return done(null, createdUser);
-  } else {
-    return done("There is no provided email", false);
+  try {
+    if (profile?.emails && profile?.emails[0]) {
+      const username = profile.displayName;
+      const email = profile?.emails[0].value;
+      const user = await findUserBy({ email });
+      if (user) return done(null, user);
+      const crypto = await generateCrypto();
+      const password = await bcrypt.hash(crypto, SALT_ROUNDS);
+      const createdUser = await createFacebookUser({
+        username,
+        password,
+        email,
+      });
+      return done(null, createdUser);
+    } else {
+      return done("There is no provided email", false);
+    }
+  } catch (error) {
+    return done("Account not created", false);
   }
 };
 

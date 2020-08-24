@@ -2,7 +2,7 @@ import { Op } from "sequelize";
 import { logger } from "../errorLogger";
 import { User } from "../../models/user";
 
-export const updateUserAuthStatus = async (authCodeId: number) => {
+export const updateUserAuthStatus = (authCodeId: number) => {
   try {
     return User.update(
       {

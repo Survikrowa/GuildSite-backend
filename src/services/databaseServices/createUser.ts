@@ -1,19 +1,17 @@
 import { User } from "../../models/user";
-import { logger } from "../errorLogger";
 
-export const createUser = async (
+export const createUser = (
   { username, password, email }: Partial<User>,
   authCodeId?: number
 ) => {
   try {
-    return await User.create({
+    return User.create({
       username,
       password,
       email,
       authCodeId,
     });
   } catch (error) {
-    logger.error(error);
-    return;
+    throw new Error(error);
   }
 };

@@ -1,10 +1,11 @@
-import type { Request } from "express";
 import bcrypt from "bcrypt";
 import { createUser } from "./databaseServices/createUser";
 import { SALT_ROUNDS } from "../constants/bcrypt";
 
-export const createNewUser = async (req: Request, authCodeId: number) => {
-  const { username, email, password } = req.body;
+export const registerUser = async (
+  { username, password, email }: userCredentials,
+  authCodeId: number
+) => {
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
   await createUser(
     {
@@ -16,7 +17,11 @@ export const createNewUser = async (req: Request, authCodeId: number) => {
   );
   return {
     message: "Account has been created!",
-    status: 201,
-    redirect: true,
   };
 };
+
+interface userCredentials {
+  username: string;
+  password: string;
+  email: string;
+}

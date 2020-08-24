@@ -1,7 +1,5 @@
 import crypto from "crypto";
 
-export const generateCrypto: authCode = async () => {
+export const generateCrypto = async () => {
   return crypto.randomBytes(16).toString("hex");
 };
-
-type authCode = () => Promise<string>;

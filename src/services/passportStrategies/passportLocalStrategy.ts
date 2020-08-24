@@ -15,8 +15,7 @@ export const strategy = new LocalStrategy(async (username, password, done) => {
       const errors = userCredentials.map((error: ZodError) => error.message);
       return done(null, false, { message: errors });
     } else {
-      const { parsedUsername, parsedPassword } = userCredentials;
-      const user = await findUserBy({ parsedUsername });
+      const user = await findUserBy(userCredentials.username);
       if (!user) {
         return done(null, false, { message: "Invalid username or password" });
       } else if (!user.authenticated) {
@@ -24,7 +23,7 @@ export const strategy = new LocalStrategy(async (username, password, done) => {
       } else {
         const hashedPassword = user.get("password");
         const isPasswordMatch = await bcrypt.compare(
-          parsedPassword,
+          userCredentials.password,
           hashedPassword
         );
         if (isPasswordMatch) {

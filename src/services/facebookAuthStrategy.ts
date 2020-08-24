@@ -1,7 +1,7 @@
 import { Strategy as FacebookStrategy } from "passport-facebook";
 import type { VerifyFunction } from "passport-facebook";
 import { createUser } from "./databaseServices/createUser";
-import { generateAuthCode } from "./generateAuthCode";
+import { generateCrypto } from "./generateCrypto";
 import { findUserBy } from "./databaseServices/findUserBy";
 import { insertActivationCode } from "./databaseServices/insertActivationCode";
 
@@ -22,7 +22,7 @@ const verifyCallback: VerifyFunction = async (
   const user = await findUserBy({ username });
   if (user) return done(null, user);
   if (profile?.emails) {
-    const authCode = await generateAuthCode();
+    const authCode = await generateCrypto();
     const instanceOfInsert = await insertActivationCode(authCode);
     if (instanceOfInsert) {
       const authCodeId = instanceOfInsert.get("authCodeId");

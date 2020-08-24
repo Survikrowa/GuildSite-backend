@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-export const generateAuthCode: authCode = async () => {
+export const generateCrypto: authCode = async () => {
   return crypto.randomBytes(16).toString("hex");
 };
 

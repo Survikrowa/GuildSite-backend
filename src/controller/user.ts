@@ -1,5 +1,5 @@
 import { createNewUser } from "../services/createNewUser";
-import { generateAuthCode } from "../services/generateAuthCode";
+import { generateCrypto } from "../services/generateCrypto";
 import { sendConfirmationMail } from "../services/sendEmail";
 import type { RequestHandler } from "express";
 import { validateRegister } from "../services/userValidation";
@@ -9,7 +9,7 @@ import { insertActivationCode } from "../services/databaseServices/insertActivat
 export const userController: RequestHandler = async (req, res, _next) => {
   const validatedSchema = await validateRegister(req.body);
   if (!validatedSchema[0]) {
-    const authCode = await generateAuthCode();
+    const authCode = await generateCrypto();
     const instanceOfInsert = await insertActivationCode(authCode);
     if (instanceOfInsert) {
       const authCodeId = instanceOfInsert.get("authCodeId");

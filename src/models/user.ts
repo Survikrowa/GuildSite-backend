@@ -1,4 +1,4 @@
-import { Model, DataTypes, NOW, Op } from "sequelize";
+import { Model, DataTypes, NOW } from "sequelize";
 import { sequelize } from "./sequelizeInstance";
 import { logger } from "../services/errorLogger";
 
@@ -61,11 +61,10 @@ User.init(
     },
     authCodeId: {
       type: DataTypes.NUMBER,
-      allowNull: false,
     },
   },
   {
-    tableName: "mzg_backend",
+    tableName: "users",
     sequelize,
   }
 );

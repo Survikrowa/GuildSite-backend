@@ -1,9 +1,10 @@
 import { Strategy as FacebookStrategy } from "passport-facebook";
 import type { VerifyFunction } from "passport-facebook";
-import { createUser } from "../databaseServices/createUser";
 import { generateCrypto } from "../generateCrypto";
 import { findUserBy } from "../databaseServices/findUserBy";
-import { insertActivationCode } from "../databaseServices/insertActivationCode";
+import { createFacebookUser } from "../databaseServices/createFacebookUser";
+import bcrypt from "bcrypt";
+import { SALT_ROUNDS } from "../../constants/bcrypt";
 
 const strategyOptions = {
   clientID: <string>process.env.FACEBOOK_ID,
@@ -18,26 +19,19 @@ const verifyCallback: VerifyFunction = async (
   profile,
   done
 ) => {
-  const username = profile.displayName;
-  const user = await findUserBy({ username });
-  if (user) return done(null, user);
   if (profile?.emails) {
-    const authCode = await generateCrypto();
-    const instanceOfInsert = await insertActivationCode(authCode);
-    if (instanceOfInsert) {
-      const authCodeId = instanceOfInsert.get("authCodeId");
-      const createdUser = await createUser(
-        {
-          username: profile.displayName,
-          password: "facebook",
-          email: profile?.emails[0].value,
-        },
-        authCodeId
-      );
-      return done(null, createdUser);
-    } else {
-      return done("Database error", false);
-    }
+    const username = profile.displayName;
+    const email = profile?.emails[0].value;
+    const user = await findUserBy({ email });
+    if (user) return done(null, user);
+    const crypto = await generateCrypto();
+    const password = await bcrypt.hash(crypto, SALT_ROUNDS);
+    const createdUser = await createFacebookUser({
+      username,
+      password,
+      email,
+    });
+    return done(null, createdUser);
   } else {
     return done("There is no provided email", false);
   }

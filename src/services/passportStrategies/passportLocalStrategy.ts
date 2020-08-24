@@ -1,6 +1,6 @@
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
-import { parseUserLoginCredentials } from "../userValidation";
+import { parseUserLoginCredentials } from "../userCredentialsParser";
 import type { ZodError } from "zod";
 import { findUserBy } from "../databaseServices/findUserBy";
 

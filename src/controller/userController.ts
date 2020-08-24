@@ -2,7 +2,7 @@ import { registerUser } from "../services/registerUser";
 import { generateCrypto } from "../services/generateCrypto";
 import { sendConfirmationMail } from "../services/sendEmail";
 import type { RequestHandler } from "express";
-import { parseUserRegisterCredentials } from "../services/userValidation";
+import { parseUserRegisterCredentials } from "../services/userCredentialsParser";
 import type { ZodError } from "zod";
 import { insertActivationCode } from "../services/databaseServices/insertActivationCode";
 import { findUserBy } from "../services/databaseServices/findUserBy";
@@ -19,13 +19,14 @@ export const userRegisterController: RequestHandler = async (
     email,
   });
   if (userCredentials[0]) {
+    console.log(userCredentials);
     const errors = userCredentials.map((error: ZodError) => error.message);
     res.status(403).json({ errors });
   } else {
     const { username, password, email } = userCredentials;
     const user = await findUserBy({ username, email });
-    if (!user) {
-      res.status(401).json({ message: "Wrong username or email" });
+    if (user) {
+      res.status(401).json({ message: "Username or email already taken" });
     } else {
       const authCode = await generateCrypto();
       const instanceOfInsert = await insertActivationCode(authCode);

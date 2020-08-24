@@ -27,11 +27,7 @@ export const parseUserRegisterCredentials = async ({
   try {
     return registerSchema.parse({ username, password, email });
   } catch (e) {
-    if (e instanceof zod.ZodError) {
-      return e.errors;
-    } else {
-      return e;
-    }
+    return e.errors;
   }
 };
 

@@ -1,10 +1,10 @@
 import { createNewUser } from "../services/createNewUser";
 import { generateAuthCode } from "../services/generateAuthCode";
-import { insertActivationCode } from "../models/activationCode";
 import { sendConfirmationMail } from "../services/sendEmail";
 import type { RequestHandler } from "express";
 import { validateRegister } from "../services/userValidation";
 import type { ZodError } from "zod";
+import { insertActivationCode } from "../services/databaseServices/insertActivationCode";
 
 export const userController: RequestHandler = async (req, res, _next) => {
   const validatedSchema = await validateRegister(req.body);

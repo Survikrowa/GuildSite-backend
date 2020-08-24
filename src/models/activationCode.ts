@@ -2,7 +2,7 @@ import { Model, DataTypes, NOW } from "sequelize";
 import { sequelize } from "./sequelizeInstance";
 import { logger } from "../services/errorLogger";
 
-class ActivationCodes extends Model {
+export class ActivationCodes extends Model {
   public authCodeId!: number;
   public activationCode!: string;
   public createdAt!: Date;
@@ -36,27 +36,3 @@ ActivationCodes.init(
     sequelize,
   }
 );
-
-export const insertActivationCode = async (activationCode: string) => {
-  try {
-    return ActivationCodes.create({
-      activationCode,
-    });
-  } catch (error) {
-    logger.log({ level: "error", message: error });
-    return;
-  }
-};
-
-export const findCodeInDb = async (activationCode: string) => {
-  try {
-    return ActivationCodes.findOne({
-      where: {
-        activationCode,
-      },
-    });
-  } catch (error) {
-    logger.log({ level: "error", message: error });
-    return;
-  }
-};

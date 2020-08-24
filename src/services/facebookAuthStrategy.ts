@@ -2,8 +2,8 @@ import { Strategy as FacebookStrategy } from "passport-facebook";
 import type { VerifyFunction } from "passport-facebook";
 import { createUser } from "./databaseServices/createUser";
 import { generateAuthCode } from "./generateAuthCode";
-import { insertActivationCode } from "../models/activationCode";
 import { findUserBy } from "./databaseServices/findUserBy";
+import { insertActivationCode } from "./databaseServices/insertActivationCode";
 
 const strategyOptions = {
   clientID: <string>process.env.FACEBOOK_ID,

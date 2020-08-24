@@ -1,6 +1,6 @@
 import type { RequestHandler } from "express";
-import { findCodeInDb } from "../models/activationCode";
 import { updateUserAuthStatus } from "../services/databaseServices/updateUserAuthStatus";
+import { findCodeInDb } from "../services/databaseServices/findCodeInDb";
 
 export const codeValidationController: RequestHandler = async (
   req,

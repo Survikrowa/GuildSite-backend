@@ -35,7 +35,7 @@ export const parseUserRegisterCredentials = async ({
   }
 };
 
-export const parseUserLoginCredentials = async ({
+export const  parseUserLoginCredentials = async ({
   username,
   password,
 }: loginData) => {

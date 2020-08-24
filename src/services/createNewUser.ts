@@ -16,7 +16,7 @@ export const createNewUser = async (req: Request, authCodeId: number) => {
   );
   return {
     message: "Account has been created!",
-    status: 203,
+    status: 201,
     redirect: true,
   };
 };

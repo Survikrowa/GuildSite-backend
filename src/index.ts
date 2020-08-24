@@ -3,12 +3,13 @@ import express from "express";
 import Session from "express-session";
 import CookieParser from "cookie-parser";
 import { router } from "./router/router";
-import { checkDB, findUserBy } from "./models/user";
+import { checkDB } from "./models/user";
 import passport from "passport";
 import { strategy as LocalStrategy } from "./services/passportLocalStrategy";
 import { strategy as FacebookStrategy } from "./services/facebookAuthStrategy";
 import { User } from "./models/user";
 import Cors from "cors";
+import { findUserBy } from "./services/databaseServices/findUserBy";
 
 const app = express();
 const port = process.env.APP_PORT;

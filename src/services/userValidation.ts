@@ -1,6 +1,5 @@
-import { findUserBy } from "../models/user";
-
 import * as zod from "zod";
+import { findUserBy } from "./databaseServices/findUserBy";
 
 const registerSchema = zod.object({
   username: zod

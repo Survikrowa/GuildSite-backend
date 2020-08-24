@@ -70,55 +70,6 @@ User.init(
   }
 );
 
-export const createUser = async (
-  { username, password, email }: Partial<User>,
-  authCodeId?: number
-) => {
-  try {
-    return await User.create({
-      username,
-      password,
-      email,
-      authCodeId,
-    });
-  } catch (error) {
-    logger.error(error);
-    return;
-  }
-};
-
-export const findUserBy = async (conditions: Record<string, string>) => {
-  try {
-    return User.findOne({
-      where: conditions,
-    });
-  } catch (error) {
-    logger.error(error);
-    return;
-  }
-};
-
-export const updateUserAuthStatus = async (authCodeId: number) => {
-  try {
-    return User.update(
-      {
-        authenticated: true,
-      },
-      {
-        where: {
-          authCodeId,
-          [Op.and]: {
-            authenticated: false,
-          },
-        },
-      }
-    );
-  } catch (error) {
-    logger.error(error);
-    return;
-  }
-};
-
 export const checkDB = async () => {
   try {
     await sequelize.authenticate();

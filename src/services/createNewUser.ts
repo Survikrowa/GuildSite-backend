@@ -1,6 +1,7 @@
 import type { Request } from "express";
 import bcrypt from "bcrypt";
-import { createUser } from "../models/user";
+import { createUser } from "./databaseServices/createUser";
+
 const SALT_ROUNDS = 10;
 
 export const createNewUser = async (req: Request, authCodeId: number) => {

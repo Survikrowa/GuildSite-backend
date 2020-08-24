@@ -9,8 +9,8 @@ export const localPassportController: RequestHandler = (req, res, next) => {
     } else {
       req.logIn(user, (err) => {
         if (err) return next(err);
+        return res.status(200).json({ Status: 200, Redirect: true });
       });
-      return res.status(200).json({ Status: 201, Redirect: true });
     }
   })(req, res, next);
 };

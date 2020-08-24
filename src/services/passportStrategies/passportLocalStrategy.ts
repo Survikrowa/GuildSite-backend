@@ -1,8 +1,8 @@
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
-import { validateLoginData } from "./userValidation";
+import { validateLoginData } from "../userValidation";
 import type { ZodError } from "zod";
-import { findUserBy } from "./databaseServices/findUserBy";
+import { findUserBy } from "../databaseServices/findUserBy";
 
 export const strategy = new LocalStrategy(async (username, password, done) => {
   try {

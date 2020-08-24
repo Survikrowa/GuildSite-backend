@@ -1,7 +1,7 @@
 import type { RequestHandler } from "express";
 import passport from "passport";
 
-export const authPassportController: RequestHandler = (req, res, next) => {
+export const localPassportController: RequestHandler = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
     if (!user) {
@@ -12,5 +12,11 @@ export const authPassportController: RequestHandler = (req, res, next) => {
       });
       return res.status(200).json({ Status: 201, Redirect: true });
     }
+  })(req, res, next);
+};
+export const facebookPassportController: RequestHandler = (req, res, next) => {
+  passport.authenticate("facebook", {
+    failureRedirect: "/login",
+    successRedirect: "/account",
   })(req, res, next);
 };

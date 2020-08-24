@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { codeValidationController } from "../controller/codeValidation";
+import { codeValidationController } from "../controller/codeValidationController";
 
 export const validationRouter = Router();
 

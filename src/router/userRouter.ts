@@ -1,10 +1,12 @@
 import { Router } from "express";
-import { userController } from "../controller/user";
-import { logoutUser } from "../controller/userLogout";
-import { authPassportController } from "../controller/authPassport";
+import {
+  userLogoutController,
+  userRegisterController,
+} from "../controller/userController";
+import { localPassportController } from "../controller/passportController";
 
 export const userRouter = Router();
 
-userRouter.post("/", userController);
-userRouter.post("/login", authPassportController);
-userRouter.post("/logout", logoutUser);
+userRouter.post("/", userRegisterController);
+userRouter.post("/login", localPassportController);
+userRouter.post("/logout", userLogoutController);

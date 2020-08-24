@@ -9,7 +9,9 @@ export const codeValidationController: RequestHandler = async (
 ) => {
   const { activationCode } = req.params;
   const foundCode = await findCodeInDb(activationCode);
-  if (foundCode) {
+  if (!foundCode) {
+    res.status(400).json({ message: "Provided auth code is wrong" });
+  } else {
     const authCodeId = foundCode.get("authCodeId");
     if (authCodeId) {
       const userUpdateStatus = await updateUserAuthStatus(authCodeId);
@@ -19,8 +21,6 @@ export const codeValidationController: RequestHandler = async (
         res.status(409).json({ message: "User is actually authenticated" });
       }
     }
-  } else {
-    res.status(400).json({ message: "Provided auth code is wrong" });
   }
   next();
 };

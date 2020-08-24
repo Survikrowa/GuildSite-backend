@@ -15,7 +15,7 @@ export const strategy = new LocalStrategy(async (username, password, done) => {
       const errors = userCredentials.map((error: ZodError) => error.message);
       return done(null, false, { message: errors });
     } else {
-      const user = await findUserBy(userCredentials.username);
+      const user = await findUserBy({ username: userCredentials.username });
       if (!user) {
         return done(null, false, { message: "Invalid username or password" });
       } else if (!user.authenticated) {

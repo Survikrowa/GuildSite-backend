@@ -1,4 +1,5 @@
 import * as zod from "zod";
+import { ZodError } from "zod/lib/src/ZodError";
 
 const registerSchema = zod.object({
   username: zod
@@ -36,19 +37,34 @@ export const parseUserLoginCredentials = async ({
   password,
 }: loginData) => {
   try {
-    return loginSchema.parse({ username, password });
+    return {
+      data: loginSchema.parse({ username, password }),
+    };
   } catch (e) {
-    return e.errors;
+    return { errors: e.errors };
   }
+};
+
+export const hasErrors = (parseResult: parseResult) => {
+  console.log(parseResult);
+  return !!parseResult.errors;
 };
 
 interface registerData {
   username: string;
   password: string;
   email: string;
+  errors?: ZodError;
 }
 
 interface loginData {
   username: string;
   password: string;
+}
+
+interface parseResult {
+  username?: string;
+  password?: string;
+  email?: string;
+  errors?: ZodError;
 }

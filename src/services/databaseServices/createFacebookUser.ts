@@ -5,13 +5,9 @@ export const createFacebookUser = ({
   password,
   email,
 }: Partial<User>) => {
-  try {
-    return User.create({
-      username,
-      password,
-      email,
-    });
-  } catch (error) {
-    throw new Error(error);
-  }
+  return User.create({
+    username,
+    password,
+    email,
+  });
 };

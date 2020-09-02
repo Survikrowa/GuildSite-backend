@@ -5,13 +5,11 @@ import { findCodeInDb } from "../services/databaseServices/findCodeInDb";
 export const codeValidationController: RequestHandler = async (
   req,
   res,
-  next
+  _next
 ) => {
   const { activationCode } = req.params;
   const foundCode = await findCodeInDb(activationCode);
-  if (!foundCode) {
-    res.status(400).json({ message: "Provided auth code is wrong" });
-  } else {
+  if (foundCode) {
     const authCodeId = foundCode.get("authCodeId");
     if (authCodeId) {
       const isUserAuthenticated = await updateUserAuthStatus(authCodeId);
@@ -21,6 +19,7 @@ export const codeValidationController: RequestHandler = async (
         res.status(409).json({ message: "User is actually authenticated" });
       }
     }
+  } else {
+    res.status(400).json({ message: "Provided auth code is wrong" });
   }
-  next();
 };

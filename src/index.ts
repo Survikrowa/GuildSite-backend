@@ -3,16 +3,21 @@ import express from "express";
 import Session from "express-session";
 import CookieParser from "cookie-parser";
 import { router } from "./router/router";
-import { checkDB, findUserByUsername } from "./models/user";
+import { checkDB } from "./models/user";
 import passport from "passport";
-import { strategy } from "./services/passportLocalStrategy";
+import { strategy as LocalStrategy } from "./services/passportStrategies/passportLocalStrategy";
+import { strategy as FacebookStrategy } from "./services/passportStrategies/passportFacebookStrategy";
 import { User } from "./models/user";
+import Cors from "cors";
+import { findUserBy } from "./services/databaseServices/findUserBy";
 
 const app = express();
-const port = 3000;
+const port = process.env.APP_PORT;
 
-passport.use(strategy);
+passport.use(LocalStrategy);
+passport.use(FacebookStrategy);
 
+app.use(Cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
@@ -30,9 +35,9 @@ passport.serializeUser<User, string>((user, done) => {
   done(null, user.username);
 });
 
-passport.deserializeUser<string, string>(async (username, done) => {
+passport.deserializeUser<User, string>(async (username, done) => {
   try {
-    const user = await findUserByUsername(username);
+    const user = await findUserBy({ username });
     if (!user) {
       return done(new Error("User not found"));
     }

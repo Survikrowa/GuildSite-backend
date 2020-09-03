@@ -1,8 +1,6 @@
-import { Sequelize, Model, DataTypes, NOW, Op } from "sequelize";
-
-const sequelize = new Sequelize(
-  `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_IP}/${process.env.DB_NAME}`
-);
+import { Model, DataTypes, NOW } from "sequelize";
+import { sequelize } from "./sequelizeInstance";
+import { logger } from "../services/errorLogger";
 
 export class User extends Model {
   public id!: number;
@@ -63,80 +61,20 @@ User.init(
     },
     authCodeId: {
       type: DataTypes.NUMBER,
-      allowNull: false,
     },
   },
   {
-    tableName: "mzg_backend",
+    tableName: "users",
     sequelize,
   }
 );
-
-export const createUser = async (
-  { username, password, email }: Partial<User>,
-  authCodeId: number
-) => {
-  try {
-    await User.create({
-      username,
-      password,
-      email,
-      authCodeId,
-    });
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export const findUserByUsername = async (username: string) => {
-  try {
-    return User.findOne({
-      where: {
-        username,
-      },
-    });
-  } catch (error) {
-    return error;
-  }
-};
-
-export const findUserByEmail = async (email: string) => {
-  try {
-    return User.findOne({
-      where: {
-        email,
-      },
-    });
-  } catch (error) {
-    return error;
-  }
-};
-
-export const updateUserAuthStatus = async (authCodeId: string) => {
-  try {
-    return User.update(
-      {
-        authenticated: true,
-      },
-      {
-        where: {
-          authCodeId,
-          [Op.and]: {
-            authenticated: false,
-          },
-        },
-      }
-    );
-  } catch (error) {
-    return error;
-  }
-};
 
 export const checkDB = async () => {
   try {
     await sequelize.authenticate();
     console.log("Success db connection");
   } catch (error) {
-    console.error(error);
+    logger.log({ level: "error", message: error });
+    process.exit();
   }
 };

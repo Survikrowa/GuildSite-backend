@@ -1,10 +1,8 @@
-import { Sequelize, Model, DataTypes, NOW } from "sequelize";
+import { Model, DataTypes, NOW } from "sequelize";
+import { sequelize } from "./sequelizeInstance";
+import { logger } from "../services/errorLogger";
 
-const sequelize = new Sequelize(
-  `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_IP}/${process.env.DB_NAME}`
-);
-
-class ActivationCodes extends Model {
+export class ActivationCodes extends Model {
   public authCodeId!: number;
   public activationCode!: string;
   public createdAt!: Date;
@@ -38,25 +36,3 @@ ActivationCodes.init(
     sequelize,
   }
 );
-
-export const insertActivationCode = async (activationCode: string) => {
-  try {
-    return ActivationCodes.create({
-      activationCode,
-    });
-  } catch (error) {
-    return error;
-  }
-};
-
-export const findCodeInDb = async (activationCode: string) => {
-  try {
-    return ActivationCodes.findOne({
-      where: {
-        activationCode,
-      },
-    });
-  } catch (error) {
-    return error;
-  }
-};

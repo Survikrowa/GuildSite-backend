@@ -1,7 +1,5 @@
 import crypto from "crypto";
 
-export const generateAuthCode: authCode = () => {
+export const generateCrypto = () => {
   return crypto.randomBytes(16).toString("hex");
 };
-
-type authCode = () => string;

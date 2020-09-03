@@ -11,7 +11,7 @@ const transporter = createTransport({
 });
 
 const prepareTextForMail = (activationCode: string) => {
-  return `To activate your account: <a href="http://localhost:3000/confirmAccount/${activationCode}">Click here</a>`;
+  return `To activate your account: <a href="${process.env.MAIL_SITE_TARGET}/confirmAccount/${activationCode}">Click here</a>`;
 };
 
 export const sendConfirmationMail = async (
@@ -19,7 +19,7 @@ export const sendConfirmationMail = async (
   activationCode: string
 ) => {
   return transporter.sendMail({
-    from: "muzykancizgruzji@gmail.com",
+    from: process.env.GMAIL_FROM,
     to,
     subject: MAIL_SUBJECT,
     html: prepareTextForMail(activationCode),

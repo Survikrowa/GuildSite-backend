@@ -1,6 +1,5 @@
 import { Router } from "express";
 import passport from "passport";
-import { facebookPassportController } from "../controller/passportController";
 
 export const passportRouter = Router();
 

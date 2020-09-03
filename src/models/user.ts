@@ -74,7 +74,7 @@ export const checkDB = async () => {
     await sequelize.authenticate();
     console.log("Success db connection");
   } catch (error) {
-    logger.error(error);
-    return;
+    logger.log({ level: "error", message: error });
+    process.exit();
   }
 };

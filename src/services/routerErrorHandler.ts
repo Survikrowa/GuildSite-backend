@@ -9,7 +9,7 @@ export const rotuerErrorHandler = (routeCallback: RequestHandler) => async (
   try {
     await routeCallback(req, res, next);
   } catch (error) {
-    logger.log({ level: "error", message: error });
+    logger.error({ level: "error", message: error });
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

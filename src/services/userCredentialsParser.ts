@@ -26,9 +26,11 @@ export const parseUserRegisterCredentials = async ({
   email,
 }: registerData) => {
   try {
-    return registerSchema.parse({ username, password, email });
+    return {
+      data: registerSchema.parse({ username, password, email }),
+    };
   } catch (e) {
-    return e.errors;
+    return { errors: e.errors };
   }
 };
 
@@ -46,15 +48,13 @@ export const parseUserLoginCredentials = async ({
 };
 
 export const hasErrors = (parseResult: parseResult) => {
-  console.log(parseResult);
-  return !!parseResult.errors;
+  return "errors" in parseResult;
 };
 
 interface registerData {
   username: string;
   password: string;
   email: string;
-  errors?: ZodError;
 }
 
 interface loginData {

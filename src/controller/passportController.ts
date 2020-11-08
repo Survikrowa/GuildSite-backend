@@ -13,9 +13,3 @@ export const localPassportController: RequestHandler = (req, res, next) => {
     })(req, res, next);
   });
 };
-export const facebookPassportController: RequestHandler = (req, res, next) => {
-  passport.authenticate("facebook", {
-    failureRedirect: "/login",
-    successRedirect: "/account",
-  })(req, res, next);
-};

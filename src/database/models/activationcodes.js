@@ -7,10 +7,6 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
-      this.myAssociation = this.belongsTo(models.User);
-    }
   }
   activationCodes.init(
     {
@@ -18,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       activationCode: DataTypes.STRING,
     },
     {
-      sequelize,
+      sequelize: sequelize,
+      tableName: "activationCodes",
       modelName: "activationCodes",
     }
   );

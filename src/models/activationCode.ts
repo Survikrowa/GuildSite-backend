@@ -1,6 +1,5 @@
 import { Model, DataTypes, NOW } from "sequelize";
 import { sequelize } from "./sequelizeInstance";
-import { logger } from "../services/errorLogger";
 
 export class ActivationCodes extends Model {
   public authCodeId!: number;

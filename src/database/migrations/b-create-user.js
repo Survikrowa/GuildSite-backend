@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("mzg_backend", {
+    await queryInterface.createTable("users", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -28,10 +28,6 @@ module.exports = {
       },
       authCodeId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "activationCodes",
-          key: "id",
-        },
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +40,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, _Sequelize) => {
-    await queryInterface.dropTable("mzg_backend");
+    await queryInterface.dropTable("users");
   },
 };

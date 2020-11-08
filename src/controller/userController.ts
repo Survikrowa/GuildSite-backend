@@ -22,24 +22,28 @@ export const userRegisterController: RequestHandler = async (
     email,
   });
   if (hasErrors(parseResult)) {
-    const errors = parseResult.map((error: ZodError) => error.message);
-    res.status(403).json({ errors });
+    const { errors } = parseResult;
+    const errorMessage = errors.map((error: ZodError) => error.message);
+    res.status(403).json({ errorMessage });
   } else {
-    const { username, password, email } = parseResult;
-    const user = await findUserBy({ username, email });
-    if (user) {
-      res.status(401).json({ message: "Username or email already taken" });
-    } else {
-      const authCode = await generateCrypto();
-      const instanceOfInsert = await insertActivationCode(authCode);
-      if (instanceOfInsert) {
-        const authCodeId = instanceOfInsert.get("authCodeId");
-        const { message } = await registerUser(
-          { username, password, email },
-          authCodeId
-        );
-        await sendConfirmationMail(email, authCode);
-        res.status(201).json({ message });
+    const { data } = parseResult;
+    if (data) {
+      const { username, password, email } = data;
+      const user = await findUserBy({ username, email });
+      if (user) {
+        res.status(401).json({ message: "Username or email already taken" });
+      } else {
+        const authCode = await generateCrypto();
+        const instanceOfInsert = await insertActivationCode(authCode);
+        if (instanceOfInsert) {
+          const authCodeId = instanceOfInsert.get("authCodeId");
+          const { message } = await registerUser(
+            { username, password, email },
+            authCodeId
+          );
+          await sendConfirmationMail(email, authCode);
+          res.status(201).json({ message });
+        }
       }
     }
   }

@@ -4,10 +4,10 @@ import {
   userRegisterController,
 } from "../controller/userController";
 import { localPassportController } from "../controller/passportController";
-import { rotuerErrorHandler } from "../services/routerErrorHandler";
+import { routerErrorHandler } from "../services/routerErrorHandler";
 
 export const userRouter = Router();
 
-userRouter.post("/", rotuerErrorHandler(userRegisterController));
-userRouter.post("/login", rotuerErrorHandler(localPassportController));
-userRouter.post("/logout", rotuerErrorHandler(userLogoutController));
+userRouter.post("/", routerErrorHandler(userRegisterController));
+userRouter.post("/login", routerErrorHandler(localPassportController));
+userRouter.post("/logout", routerErrorHandler(userLogoutController));

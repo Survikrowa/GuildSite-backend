@@ -5,7 +5,7 @@ import type { RequestHandler } from "express";
 import {
   hasErrors,
   parseUserRegisterCredentials,
-} from "../services/userCredentialsParser";
+} from "../services/dataParser";
 import type { ZodError } from "zod";
 import { insertActivationCode } from "../services/databaseServices/insertActivationCode";
 import { findUserBy } from "../services/databaseServices/findUserBy";

@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   Session({
     secret: <string>process.env.SESSION_SECRET,
-    resave: true,
+    resave: false,
     saveUninitialized: false,
   })
 );

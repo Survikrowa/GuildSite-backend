@@ -50,7 +50,7 @@ export const userRegisterController: RequestHandler = async (
 };
 export const userLogoutController: RequestHandler = (req, res, _next) => {
   req.logout();
-  req.session = undefined;
+  req.session?.destroy(() => console.log);
   res.clearCookie("connect.sid");
-  res.status(204);
+  res.status(204).json({ redirect: true });
 };

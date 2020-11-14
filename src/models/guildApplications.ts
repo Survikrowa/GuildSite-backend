@@ -1,7 +1,6 @@
 import { Model, DataTypes, NOW } from "sequelize";
 import { sequelize } from "./sequelizeInstance";
 import { guildApplicationState } from "../constants/guildApplicationStates";
-import { User } from "./user";
 
 export class GuildApplications extends Model {
   public id!: number;
@@ -76,6 +75,10 @@ GuildApplications.init(
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: NOW,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {

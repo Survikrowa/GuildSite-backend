@@ -76,7 +76,6 @@ User.hasOne(GuildApplications, {
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
-
 GuildApplications.belongsTo(User);
 
 export const checkDB = async () => {

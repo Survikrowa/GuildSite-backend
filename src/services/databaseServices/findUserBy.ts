@@ -2,13 +2,12 @@ import { User } from "../../models/user";
 import { Op } from "sequelize";
 
 export const findUserBy = (conditions: Record<string, string>) => {
-  const arr = [];
-  for (const [key, value] of Object.entries(conditions)) {
-    arr.push({ [key]: value });
-  }
+  const findBy = Object.entries(conditions).map(([key, item]) => {
+    return { [key]: item };
+  });
   return User.findOne({
     where: {
-      [Op.or]: arr,
+      [Op.or]: findBy,
     },
   });
 };

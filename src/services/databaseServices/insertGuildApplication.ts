@@ -10,7 +10,6 @@ type GuildApplcation = {
   uiScreen: string;
   whereDidUFindUs: string;
   prefRaidLang: string;
-  applicationState: string;
 };
 
 export const insertGuildApplication = (

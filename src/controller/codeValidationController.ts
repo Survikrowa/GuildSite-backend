@@ -1,6 +1,7 @@
 import type { RequestHandler } from "express";
 import { updateUserAuthStatus } from "../services/databaseServices/updateUserAuthStatus";
 import { findCodeInDb } from "../services/databaseServices/findCodeInDb";
+import { isUserNotAuthenticated } from "../helpers/isUserAuthenticated";
 
 export const codeValidationController: RequestHandler = async (
   req,
@@ -12,14 +13,19 @@ export const codeValidationController: RequestHandler = async (
   if (foundCode) {
     const authCodeId = foundCode.get("authCodeId");
     if (authCodeId) {
-      const isUserAuthenticated = await updateUserAuthStatus(authCodeId);
-      if (isUserAuthenticated) {
-        res.status(200).json({ message: "User authenticated successfully" });
+      const instance = await updateUserAuthStatus(authCodeId);
+      console.log(isUserNotAuthenticated(instance));
+      if (isUserNotAuthenticated(instance)) {
+        res
+          .status(200)
+          .json({
+            message: "User authenticated successfully. You can now log in!",
+          });
       } else {
-        res.status(409).json({ message: "User is actually authenticated" });
+        res.status(409).json({ message: "User is actually authenticated." });
       }
     }
   } else {
-    res.status(400).json({ message: "Provided auth code is wrong" });
+    res.status(400).json({ message: "Provided auth code is wrong." });
   }
 };

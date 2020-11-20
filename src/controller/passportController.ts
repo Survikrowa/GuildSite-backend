@@ -8,7 +8,7 @@ export const localPassportController: RequestHandler = (req, res, next) => {
       if (!user) return res.status(401).json({ message: info.message });
       req.logIn(user, (err) => {
         if (err) return reject(err);
-        return res.status(200).json({ Status: 200, Redirect: true });
+        return res.status(200).json({ Status: 200, Redirect: true, user });
       });
     })(req, res, next);
   });

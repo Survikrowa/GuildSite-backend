@@ -1,6 +1,6 @@
 export const guildApplicationState = {
   NEW: "New",
-  INVITE_TO_DISCORD: "Invite to discord",
+  INVITE_TO_DISCORD: "InviteToDiscord",
   APPROVED: "Approved",
   REJECTED: "Rejected",
 };

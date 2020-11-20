@@ -17,7 +17,12 @@ const port = process.env.APP_PORT;
 passport.use(LocalStrategy);
 passport.use(FacebookStrategy);
 
-app.use(Cors());
+app.use(
+  Cors({
+    origin: process.env.CROS_ORIGIN,
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
@@ -25,6 +30,9 @@ app.use(
     secret: <string>process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      domain: process.env.SESSION_DOMAIN,
+    },
   })
 );
 app.use(CookieParser(process.env.SESSION_SECRET));

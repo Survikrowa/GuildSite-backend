@@ -5,7 +5,7 @@ import type { RequestHandler } from "express";
 import {
   hasErrors,
   parseUserRegisterCredentials,
-} from "../services/userCredentialsParser";
+} from "../services/dataParser";
 import type { ZodError } from "zod";
 import { insertActivationCode } from "../services/databaseServices/insertActivationCode";
 import { findUserBy } from "../services/databaseServices/findUserBy";
@@ -50,7 +50,6 @@ export const userRegisterController: RequestHandler = async (
 };
 export const userLogoutController: RequestHandler = (req, res, _next) => {
   req.logout();
-  req.session = undefined;
-  res.clearCookie("connect.sid");
-  res.status(204);
+  res.clearCookie("connect.sid", { path: "/" });
+  res.status(200).send();
 };

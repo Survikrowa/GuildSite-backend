@@ -20,6 +20,30 @@ const loginSchema = zod.object({
     .min(8, { message: "Password must be at least 8 chars long" }),
 });
 
+const guildApplicationSchema = zod.object({
+  igName: zod.string().min(1, { message: "Field is required" }),
+  userDescription: zod.string().min(1, { message: "Field is required" }),
+  age: zod.string().min(1, { message: "Field is required" }),
+  mainAndAlts: zod.string().min(1, { message: "Field is required" }),
+  prevExp: zod.string().min(1, { message: "Field is required" }),
+  raidDays: zod.string().min(1, { message: "Field is required" }),
+  uiScreen: zod.string().min(1, { message: "Field is required" }),
+  whereDidUFindUs: zod.string().min(1, { message: "Field is required" }),
+  prefRaidLang: zod.string().min(1, { message: "Field is required" }),
+});
+
+export const parseGuildApplication = async (
+  guildApplication: typeof guildApplicationSchema
+) => {
+  try {
+    return {
+      data: guildApplicationSchema.parse(guildApplication),
+    };
+  } catch (e) {
+    return { errors: e.errors };
+  }
+};
+
 export const parseUserRegisterCredentials = async ({
   username,
   password,

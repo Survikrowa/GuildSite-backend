@@ -1,6 +1,8 @@
 import { Model, DataTypes, NOW } from "sequelize";
 import { sequelize } from "./sequelizeInstance";
 import { logger } from "../services/errorLogger";
+import { guildRanks } from "../constants/guildRanks";
+import { GuildApplications } from "./guildApplications";
 
 export class User extends Model {
   public id!: number;
@@ -37,7 +39,7 @@ User.init(
     userRank: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "Studenciak",
+      defaultValue: guildRanks.STUDENCIAK,
     },
     userAvatar: {
       type: DataTypes.STRING,
@@ -60,14 +62,21 @@ User.init(
       defaultValue: false,
     },
     authCodeId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
   },
   {
     tableName: "users",
-    sequelize,
+    modelName: "users",
+    sequelize: sequelize,
   }
 );
+
+User.hasOne(GuildApplications, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+GuildApplications.belongsTo(User);
 
 export const checkDB = async () => {
   try {

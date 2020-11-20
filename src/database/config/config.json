@@ -1,0 +1,9 @@
+{
+  "dev": {
+    "username": "qjlbgfixsenary",
+    "password": "209c5e93f4e8eb8eaf011c7f630a3c9b9b2ed796b3cbde608451aa3bbe68c40d",
+    "database": "dkhmk37i8dfd4",
+    "host": "ec2-54-172-219-218.compute-1.amazonaws.com",
+    "dialect": "postgres"
+  }
+}

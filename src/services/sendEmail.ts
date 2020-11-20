@@ -11,7 +11,7 @@ const transporter = createTransport({
 });
 
 const prepareTextForMail = (activationCode: string) => {
-  return `To activate your account: <a href="${process.env.MAIL_SITE_TARGET}/confirmAccount/${activationCode}">Click here</a>`;
+  return `To activate your account: <a href="${process.env.MAIL_SITE_TARGET}/confirmaccount/${activationCode}">Click here</a>`;
 };
 
 export const sendConfirmationMail = async (

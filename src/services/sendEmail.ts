@@ -4,6 +4,8 @@ const MAIL_SUBJECT = "Please confirm your registration process";
 
 const transporter = createTransport({
   service: "gmail",
+  host: 'smtp.gmail.com',
+      port: 465,
   auth: {
     user: process.env.GMAIL_LOGIN,
     pass: process.env.GMAIL_PASSWORD,
@@ -23,5 +25,9 @@ export const sendConfirmationMail = async (
     to,
     subject: MAIL_SUBJECT,
     html: prepareTextForMail(activationCode),
-  });
+  },(error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response)});
 };

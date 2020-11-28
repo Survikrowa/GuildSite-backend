@@ -10,6 +10,7 @@ import { strategy as FacebookStrategy } from "./services/passportStrategies/pass
 import { User } from "./models/user";
 import Cors from "cors";
 import { findUserBy } from "./services/databaseServices/findUserBy";
+const memoryStore = require("memorystore")(Session);
 
 const app = express();
 const port = process.env.APP_PORT;
@@ -33,6 +34,7 @@ app.use(
     cookie: {
       domain: process.env.SESSION_DOMAIN,
     },
+    store: new memoryStore({checkPeriod: 86400000})
   })
 );
 app.use(CookieParser(process.env.SESSION_SECRET));
@@ -54,6 +56,7 @@ passport.deserializeUser<User, string>(async (username, done) => {
     done(e);
   }
 });
+
 
 app.use("/api", router);
 

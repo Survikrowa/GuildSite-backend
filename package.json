@@ -1,8 +1,12 @@
 {
   "name": "guildsite-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "NodeJS\r TypeScript\r ExpressJS",
   "main": "dist/index.js",
+  "engines": {
+    "node": "12.x",
+    "npm": "6.14.8"
+  },
   "scripts": {
     "dev": "ts-node-dev -r dotenv/config src/index.ts ",
     "build": "tsc",
@@ -56,5 +60,13 @@
     "prettier": "^2.0.5",
     "sequelize": "^5.22.3",
     "zod": "^1.10.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Survikrowa/GuildSite-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Survikrowa/GuildSite-backend/issues"
+  },
+  "homepage": "https://github.com/Survikrowa/GuildSite-backend#readme"
 }

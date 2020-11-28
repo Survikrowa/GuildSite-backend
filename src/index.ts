@@ -13,7 +13,7 @@ import { findUserBy } from "./services/databaseServices/findUserBy";
 const memoryStore = require("memorystore")(Session);
 
 const app = express();
-const port = process.env.APP_PORT;
+const port = process.env.PORT;
 
 passport.use(LocalStrategy);
 passport.use(FacebookStrategy);
@@ -60,4 +60,4 @@ passport.deserializeUser<User, string>(async (username, done) => {
 
 app.use("/api", router);
 
-app.listen(port, checkDB);
+app.listen(port, () => console.log(`Server is listening on port ${port}...`));

@@ -1,9 +1,6 @@
 import { createTransport } from "nodemailer";
 import { myOAuth2Client } from "../index";
 
-myOAuth2Client.setCredentials({
-  refresh_token: process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
-});
 const myAccessToken = myOAuth2Client.getAccessToken();
 const MAIL_SUBJECT = "Please confirm your registration process";
 

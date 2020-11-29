@@ -11,8 +11,8 @@ import { User } from "./models/user";
 import Cors from "cors";
 import { findUserBy } from "./services/databaseServices/findUserBy";
 const memoryStore = require("memorystore")(Session);
-import {google} from 'googleapis';
-const OAuth2 = google.auth.OAuth2
+import { google } from "googleapis";
+const OAuth2 = google.auth.OAuth2;
 
 const app = express();
 const port = process.env.PORT;
@@ -28,7 +28,18 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-export const myOAuth2Client = new OAuth2(process.env.GOOGLE_OAUTH_ID, process.env.GOOGLE_OAUTH_SECRET)
+export const myOAuth2Client = new OAuth2(
+  process.env.GOOGLE_OAUTH_ID,
+  process.env.GOOGLE_OAUTH_SECRET
+);
+console.log(
+  myOAuth2Client,
+  process.env.GOOGLE_OAUTH_ID,
+  process.env.GOOGLE_OAUTH_SECRET
+);
+myOAuth2Client.setCredentials({
+  refresh_token: process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
+});
 app.use(
   Session({
     secret: <string>process.env.SESSION_SECRET,
@@ -37,7 +48,7 @@ app.use(
     cookie: {
       domain: process.env.SESSION_DOMAIN,
     },
-    store: new memoryStore({checkPeriod: 86400000})
+    store: new memoryStore({ checkPeriod: 86400000 }),
   })
 );
 app.use(CookieParser(process.env.SESSION_SECRET));
@@ -59,7 +70,6 @@ passport.deserializeUser<User, string>(async (username, done) => {
     done(e);
   }
 });
-
 
 app.use("/api", router);
 

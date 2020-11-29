@@ -1,7 +1,6 @@
 import { createTransport } from "nodemailer";
-import { myOAuth2Client } from "../index";
+import { myAccessToken } from "../index";
 
-const myAccessToken = myOAuth2Client.getAccessToken();
 const MAIL_SUBJECT = "Please confirm your registration process";
 
 const transporter = createTransport({

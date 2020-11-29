@@ -40,6 +40,7 @@ console.log(
 myOAuth2Client.setCredentials({
   refresh_token: process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
 });
+export const myAccessToken = myOAuth2Client.getAccessToken();
 app.use(
   Session({
     secret: <string>process.env.SESSION_SECRET,

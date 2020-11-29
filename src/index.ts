@@ -32,11 +32,6 @@ export const myOAuth2Client = new OAuth2(
   process.env.GOOGLE_OAUTH_ID,
   process.env.GOOGLE_OAUTH_SECRET
 );
-console.log(
-  myOAuth2Client,
-  process.env.GOOGLE_OAUTH_ID,
-  process.env.GOOGLE_OAUTH_SECRET
-);
 myOAuth2Client.setCredentials({
   refresh_token: process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
 });
@@ -48,6 +43,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       domain: process.env.SESSION_DOMAIN,
+      httpOnly: true,
+      secure: true,
     },
     store: new memoryStore({ checkPeriod: 86400000 }),
   })

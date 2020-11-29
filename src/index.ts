@@ -12,17 +12,18 @@ import Cors from "cors";
 import { findUserBy } from "./services/databaseServices/findUserBy";
 
 const app = express();
-const port = process.env.APP_PORT;
+const port = Number(process.env.APP_PORT);
 
 passport.use(LocalStrategy);
 passport.use(FacebookStrategy);
 
 app.use(
   Cors({
-    origin: process.env.CROS_ORIGIN,
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
   })
 );
+console.log(process.env.CORS_ORIGIN);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
@@ -32,6 +33,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       domain: process.env.SESSION_DOMAIN,
+      httpOnly: true,
+      secure: true,
     },
   })
 );
@@ -57,4 +60,4 @@ passport.deserializeUser<User, string>(async (username, done) => {
 
 app.use("/api", router);
 
-app.listen(port, checkDB);
+app.listen(port, "api.gruzja.localhost", checkDB);

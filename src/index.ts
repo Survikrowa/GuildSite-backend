@@ -11,6 +11,8 @@ import { User } from "./models/user";
 import Cors from "cors";
 import { findUserBy } from "./services/databaseServices/findUserBy";
 const memoryStore = require("memorystore")(Session);
+import {google} from 'googleapis';
+const OAuth2 = google.auth.OAuth2
 
 const app = express();
 const port = process.env.PORT;
@@ -26,6 +28,7 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+export const myOAuth2Client = new OAuth2(process.env.GOOGLE_OAUTH_ID, process.env.GOOGLE_OAUTH_SECRET)
 app.use(
   Session({
     secret: <string>process.env.SESSION_SECRET,

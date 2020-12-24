@@ -1,0 +1,28 @@
+module.exports = {
+  dev: {
+    username: '',
+    password: '',
+    database: '',
+    host: '',
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  },
+  production: {
+    username: '',
+    password: '',
+    database: '',
+    host: '',
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  },
+};

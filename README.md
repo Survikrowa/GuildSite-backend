@@ -1,6 +1,3 @@
 # GuildSite-backend
 
-# Technologies
-NodeJS
-TypeScript
-ExpressJS
+Merged with https://github.com/Survikrowa/GuildSite as a Monorepo.
